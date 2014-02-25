@@ -1,4 +1,4 @@
-Form1[] forms = new Form1[10];
+Form1[] forms = new Form1[2];
 
 void setup(){
   size(600,600);
@@ -13,13 +13,11 @@ void draw(){
     forms[i].b1();
     forms[i].b2();
   }
-  for(int i = 0; i < forms.length; i++){
-    for(int j = 1; j < forms.length; j++){
-      if(forms[i].intersect(forms[j])){
-        forms[i].b3();
-        //forms[j].b3();
+  for(int i = 0; i < forms.length + 1; i++){
+      if(intersect(forms[i], forms[i-1])){
+        println(intersect(forms[i], forms[i-1]));
+        //println("intersecting");
       }
-    }
   }
 }
 
@@ -73,21 +71,24 @@ class Form1{
  void display(){
    stroke(c);
    noFill();
-rect(location.x, location.y,sX,sY);
+ellipse(location.x, location.y,sX,sY);
    
  }
  
- boolean intersect(Form1 el) {
+
+
+}
+
+ boolean intersect(Form1 el1, Form1 el2) {
     
     // Objects can be passed into functions as arguments too! 
-    float distance = dist(location.x,location.y,el.location.x,el.location.y); // Calculate distance
-    
+    float distance = el1.location.dist(el2.location); // Calculate distance
+    //println(distance);
+//    println(this.sX + el.sX);
     // Compare distance to sum of radii
-    if (distance < sX + el.sX) {
+    if (distance < el1.sX + el2.sX) {
       return true;
     } else {
       return false;
     }
   }
-
-}
